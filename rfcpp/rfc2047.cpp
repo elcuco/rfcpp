@@ -91,7 +91,7 @@ static auto decode_impl(std::istream &in) -> std::string {
             if (c == '?') {
                 return {};
             }
-            encoding += c;
+            encoding += ::toupper(c);
             state = ParseState::encoding;
             break;
         case ParseState::encoding:
@@ -99,7 +99,7 @@ static auto decode_impl(std::istream &in) -> std::string {
                 state = ParseState::text_prefix;
                 break;
             }
-            encoding += c;
+            encoding += ::toupper(c);
             break;
         case ParseState::text_prefix:
             // empty text? this this valid?
@@ -130,8 +130,7 @@ static auto decode_impl(std::istream &in) -> std::string {
             state = ParseState::end;
             break;
         case ParseState::end:
-            // Nothing is supported after this step
-//            return {};
+            // In therory, we should break this look. Lets do thia aftereards.
             break;
         }
 
